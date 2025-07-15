@@ -20,11 +20,15 @@ This solution is designed to protect DAO treasuries, high-value accounts, or wal
 ### `Token.sol` (KrkUSD)
 A test ERC20 token with 6 decimal places.
 
+---
+
 ### `TwapTrap.sol`
 Main trap logic:
 
 - Compares the current block’s balance to the previous block’s.
 - If the loss exceeds the `thresholdPercent`, returns `true` and `calldata` for `transferFrom()`.
+
+---
 
 ### `Trap.sol`
 An example trap that checks `isActive()` on an external contract and returns a Discord username.
@@ -35,23 +39,10 @@ An example trap that checks `isActive()` on an external contract and returns a D
 
 function collect() external view returns (bytes memory);
 
-### Collects the current balance.
+### `collect()`
+Collects the current balance.
+
+---
+
+### `shouldRespond()`
 function shouldRespond(bytes[] calldata data) external pure returns (bool, bytes memory);
-
-### Compares the balances of two blocks.
-Triggers if the decrease is above the threshold.
-
-###Important:
-The targetWallet must approve the trap in advance with a sufficiently high allowance.
-
-##⚡ Deployment and Setup
-
-##1️⃣ Deploy the Token
-
-forge create src/Token.sol:KrkUSD \
-  --rpc-url https://ethereum-hoodi-rpc.publicnode.com \
-  --private-key YOUR_PRIVATE_KEY
-### Save the token contract address.
-
-##2️⃣ Update TwapTrap.sol Parameters
-Replace the values in the contract:
