@@ -72,3 +72,48 @@ forge build
 
 ## 4️⃣ Configure drosera.toml
 
+ethereum_rpc = "https://ethereum-hoodi-rpc.publicnode.com"
+drosera_rpc = "https://relay.hoodi.drosera.io"
+drosera_address = "0x91cB447BaFc6e0EA0F4Fe056F5a9b1F14bb06e5D"
+
+[traps]
+
+[traps.twaptrap]
+path = "out/TwapTrap.sol/TwapTrap.json"
+response_contract = "<TOKEN_ADDRESS>"
+response_function = "transferFrom(address,address,uint256)"
+cooldown_period_blocks = 8
+min_number_of_operators = 1
+max_number_of_operators = 2
+block_sample_size = 2
+private_trap = true
+whitelist = ["<YOUR_OPERATOR_ADDRESS>"]
+
+## 5️⃣ Deploy the Trap
+DROSERA_PRIVATE_KEY=YOUR_PRIVATE_KEY drosera apply
+
+## 6️⃣ Approve the Trap
+cast send <TOKEN_ADDRESS> \
+  "approve(address,uint256)" <TRAP_ADDRESS> 1000000000000 \
+  --rpc-url https://ethereum-hoodi-rpc.publicnode.com \
+  --private-key YOUR_PRIVATE_KEY
+## 7️⃣ Verify
+### ✅ Transfer part of the tokens from targetWallet to another address.
+
+### ✅ Wait 1–3 blocks.
+
+### ✅ In the Drosera dashboard, check that shouldRespond = true.
+
+### ✅ Confirm that the remaining funds were transferred to the rescueWallet.
+
+## 🧠 Potential Improvements
+
+Make thresholdPercent configurable without redeploying the contract.
+
+Support monitoring multiple tokens.
+
+Add a delay timer before responding.
+
+## ✍️ Author
+Created: July 2025
+Author: Your name or Discord
