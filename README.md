@@ -35,3 +35,5 @@ An example trap that checks `isActive()` on an external contract and returns a D
 
 ```solidity
 function collect() external view returns (bytes memory);
+Collects the current balance.
+function shouldRespond(bytes[] calldata data) external pure returns (bool, bytes memory);
