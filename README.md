@@ -122,5 +122,7 @@ Add a delay timer before responding.
 ---
 
 ## ✍️ Author
-Created: July 2025
-Author: Your name or Discord
+
+Created: 12 July 2025
+
+Author: Coyolx
