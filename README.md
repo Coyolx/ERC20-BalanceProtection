@@ -61,6 +61,7 @@ forge create src/Token.sol:KrkUSD \
 
  ## 2️⃣ Update TwapTrap.sol Parameters
 Replace the values in the contract:
+
 address public constant token = <TOKEN_ADDRESS>;
 address public constant targetWallet = <MAIN_WALLET>;
 address public constant rescueWallet = <RESCUE_WALLET>;
