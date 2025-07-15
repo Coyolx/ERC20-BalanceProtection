@@ -63,8 +63,11 @@ forge create src/Token.sol:KrkUSD \
 Replace the values in the contract:
 
 address public constant token = <TOKEN_ADDRESS>;
+
 address public constant targetWallet = <MAIN_WALLET>;
+
 address public constant rescueWallet = <RESCUE_WALLET>;
+
 uint256 public constant thresholdPercent = 30;
 
 ## 3️⃣ Compile
@@ -106,6 +109,8 @@ cast send <TOKEN_ADDRESS> \
 
 ### ✅ Confirm that the remaining funds were transferred to the rescueWallet.
 
+---
+
 ## 🧠 Potential Improvements
 
 Make thresholdPercent configurable without redeploying the contract.
@@ -113,6 +118,8 @@ Make thresholdPercent configurable without redeploying the contract.
 Support monitoring multiple tokens.
 
 Add a delay timer before responding.
+
+---
 
 ## ✍️ Author
 Created: July 2025
