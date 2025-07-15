@@ -67,3 +67,8 @@ address public constant targetWallet = <MAIN_WALLET>;
 address public constant rescueWallet = <RESCUE_WALLET>;
 uint256 public constant thresholdPercent = 30;
 
+## 3️⃣ Compile
+forge build
+
+## 4️⃣ Configure drosera.toml
+
