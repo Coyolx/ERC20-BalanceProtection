@@ -52,3 +52,13 @@ The targetWallet must approve the trap in advance with a sufficiently high allow
 
 ## ⚡ Deployment and Setup
 ## 1️⃣ Deploy the Token
+
+forge create src/Token.sol:KrkUSD \
+  --rpc-url https://ethereum-hoodi-rpc.publicnode.com \
+  --private-key YOUR_PRIVATE_KEY
+  
+ Save the token contract address. 
+
+ ## 2️⃣ Update TwapTrap.sol Parameters
+Replace the values in the contract:
+
