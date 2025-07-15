@@ -103,11 +103,11 @@ cast send <TOKEN_ADDRESS> \
 ## 7️⃣ Verify
 #### ✅ Transfer part of the tokens from targetWallet to another address.
 
-### ✅ Wait 1–3 blocks.
+#### ✅ Wait 1–3 blocks.
 
-### ✅ In the Drosera dashboard, check that shouldRespond = true.
+#### ✅ In the Drosera dashboard, check that shouldRespond = true.
 
-### ✅ Confirm that the remaining funds were transferred to the rescueWallet.
+#### ✅ Confirm that the remaining funds were transferred to the rescueWallet.
 
 ---
 
