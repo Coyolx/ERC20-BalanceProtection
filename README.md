@@ -1,87 +1,126 @@
-# Drosera Trap Foundry Template
+# 🛡️ Protecting a Token from Unauthorized Withdrawals
 
-This repo is for quickly bootstrapping a new Drosera project. It includes instructions for creating your first trap, deploying it to the Drosera network, and updating it on the fly.
+A **Drosera trap** that automatically monitors the balance of a specific ERC20 token on a wallet.  
+If the balance drops by more than a configured percentage, the trap triggers a transaction to transfer the remaining funds to a backup wallet.
 
-[![view - Documentation](https://img.shields.io/badge/view-Documentation-blue?style=for-the-badge)](https://dev.drosera.io "Project documentation")
+This solution is designed to protect DAO treasuries, high-value accounts, or wallets at risk of compromise.
 
-## Configure dev environment
+---
 
-```bash
-curl -L https://foundry.paradigm.xyz | bash
-foundryup
+## 🎯 Objectives
 
-# The trap-foundry-template utilizes node modules for dependency management
-# install Bun (optional)
-curl -fsSL https://bun.sh/install | bash
+- **Monitor** the balance of a specific ERC20 token (`KrkUSD`) on a target wallet.
+- **Trigger** when the balance decreases by **30% or more**.
+- **Automatically transfer** the remaining tokens to a backup wallet.
 
-# install node modules
-bun install
+---
 
-# install vscode (optional)
-# - add solidity extension JuanBlanco.solidity
+## ⚙️ Contracts
 
-# install drosera-cli
-curl -L https://app.drosera.io/install | bash
-droseraup
-```
+### `Token.sol` (KrkUSD)
+A test ERC20 token with 6 decimal places.
 
-open the VScode preferences and Select `Soldity: Change workpace compiler version (Remote)`
+### `TwapTrap.sol`
+Main trap logic:
 
-Select version `0.8.12`
+- Compares the current block’s balance to the previous block’s.
+- If the loss exceeds the `thresholdPercent`, returns `true` and `calldata` for `transferFrom()`.
 
-## Quick Start
+### `Trap.sol`
+An example trap that checks `isActive()` on an external contract and returns a Discord username.
 
-### Hello World Trap
+---
 
-The drosera.toml file is configured to deploy a simple "Hello, World!" trap. Ensure the drosera.toml file is set to the following configuration:
+## 🧩 TwapTrap.sol Logic
 
-```toml
-response_contract = "0xdA890040Af0533D98B9F5f8FE3537720ABf83B0C"
-response_function = "helloworld(string)"
-```
+```solidity
+function collect() external view returns (bytes memory);
+Collects the current balance.
 
-To deploy the trap, run the following commands:
+solidity
+Copy
+Edit
+function shouldRespond(bytes[] calldata data) external pure returns (bool, bytes memory);
+Compares the balances of two blocks.
+Triggers if the decrease is above the threshold.
 
-```bash
-# Compile the Trap
+Important:
+The targetWallet must approve the trap in advance with a sufficiently high allowance.
+
+⚡ Deployment and Setup
+1️⃣ Deploy the Token
+bash
+Copy
+Edit
+forge create src/Token.sol:KrkUSD \
+  --rpc-url https://ethereum-hoodi-rpc.publicnode.com \
+  --private-key YOUR_PRIVATE_KEY
+Save the token contract address.
+
+2️⃣ Update TwapTrap.sol Parameters
+Replace the values in the contract:
+
+solidity
+Copy
+Edit
+address public constant token = <TOKEN_ADDRESS>;
+address public constant targetWallet = <MAIN_WALLET>;
+address public constant rescueWallet = <RESCUE_WALLET>;
+uint256 public constant thresholdPercent = 30;
+3️⃣ Compile
+bash
+Copy
+Edit
 forge build
+4️⃣ Configure drosera.toml
+toml
+Copy
+Edit
+ethereum_rpc = "https://ethereum-hoodi-rpc.publicnode.com"
+drosera_rpc = "https://relay.hoodi.drosera.io"
+drosera_address = "0x91cB447BaFc6e0EA0F4Fe056F5a9b1F14bb06e5D"
 
-# Deploy the Trap
-DROSERA_PRIVATE_KEY=0x.. drosera apply
-```
+[traps]
 
-After successfully deploying the trap, the CLI will add an `address` field to the `drosera.toml` file.
+[traps.twaptrap]
+path = "out/TwapTrap.sol/TwapTrap.json"
+response_contract = "<TOKEN_ADDRESS>"
+response_function = "transferFrom(address,address,uint256)"
+cooldown_period_blocks = 8
+min_number_of_operators = 1
+max_number_of_operators = 2
+block_sample_size = 2
+private_trap = true
+whitelist = ["<YOUR_OPERATOR_ADDRESS>"]
+5️⃣ Deploy the Trap
+bash
+Copy
+Edit
+DROSERA_PRIVATE_KEY=YOUR_PRIVATE_KEY drosera apply
+6️⃣ Approve the Trap
+bash
+Copy
+Edit
+cast send <TOKEN_ADDRESS> \
+  "approve(address,uint256)" <TRAP_ADDRESS> 1000000000000 \
+  --rpc-url https://ethereum-hoodi-rpc.publicnode.com \
+  --private-key YOUR_PRIVATE_KEY
+7️⃣ Verify
+✅ Transfer part of the tokens from targetWallet to another address.
 
-Congratulations! You have successfully deployed your first trap!
+✅ Wait 1–3 blocks.
 
-### Response Trap
+✅ In the Drosera dashboard, check that shouldRespond = true.
 
-You can then update the trap by changing its logic and recompling it or changing the path field in the `drosera.toml` file to point to the Response Trap.
+✅ Confirm that the remaining funds were transferred to the rescueWallet.
 
-The Response Trap is designed to trigger a response at a specific block number. To test the Response Trap, pick a future block number and update the Response Trap.
-Specify a response contract address and function signature in the drosera.toml file to the following:
+🧠 Potential Improvements
+Make thresholdPercent configurable without redeploying the contract.
 
-```toml
-response_contract = "0x183D78491555cb69B68d2354F7373cc2632508C7"
-response_function = "responseCallback(uint256)"
-```
+Support monitoring multiple tokens.
 
-Finally, deploy the Response Trap by running the following commands:
+Add a delay timer before responding.
 
-```bash
-# Compile the Trap
-forge build
-
-# Deploy the Trap
-DROSERA_PRIVATE_KEY=0x.. drosera apply
-```
-
-> Note: The `DROSERA_PRIVATE_KEY` environment variable can be used to deploy traps. You can also set it in the drosera.toml file as `private_key = "0x.."`.
-
-## Testing
-
-Example tests are included in the `tests` directory. They simulate how Drosera Operators execute traps and determine if a response should be triggered. To run the tests, execute the following command:
-
-```bash
-forge test
-```
+✍️ Author
+Created: July 2025
+Author: Your name or Discord
