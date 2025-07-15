@@ -101,7 +101,7 @@ cast send <TOKEN_ADDRESS> \
   --rpc-url https://ethereum-hoodi-rpc.publicnode.com \
   --private-key YOUR_PRIVATE_KEY
 ## 7️⃣ Verify
-### ✅ Transfer part of the tokens from targetWallet to another address.
+#### ✅ Transfer part of the tokens from targetWallet to another address.
 
 ### ✅ Wait 1–3 blocks.
 
