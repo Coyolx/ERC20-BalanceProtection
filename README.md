@@ -45,7 +45,7 @@ function shouldRespond(bytes[] calldata data) external pure returns (bool, bytes
 Compares the balances of two blocks.
 Triggers if the decrease is above the threshold.
 
-##Important:
+## Important:
 The targetWallet must approve the trap in advance with a sufficiently high allowance.
 
 ----
