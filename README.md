@@ -39,14 +39,16 @@ An example trap that checks `isActive()` on an external contract and returns a D
 function collect() external view returns (bytes memory);
 
 Collects the current balance.
+
 function shouldRespond(bytes[] calldata data) external pure returns (bool, bytes memory);
 
 Compares the balances of two blocks.
 Triggers if the decrease is above the threshold.
-№№Important:
+
+##Important:
 The targetWallet must approve the trap in advance with a sufficiently high allowance.
 
 ----
 
-№№⚡ Deployment and Setup
-№№№1️⃣ Deploy the Token
+## ⚡ Deployment and Setup
+## 1️⃣ Deploy the Token
