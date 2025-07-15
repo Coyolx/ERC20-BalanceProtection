@@ -33,7 +33,6 @@ An example trap that checks `isActive()` on an external contract and returns a D
 
 ## 🧩 TwapTrap.sol Logic
 
-```solidity
 function collect() external view returns (bytes memory);
 
 ## Collects the current balance.
