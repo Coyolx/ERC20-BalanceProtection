@@ -45,6 +45,7 @@ Important:
 The targetWallet must approve the trap in advance with a sufficiently high allowance.
 
 ⚡ Deployment and Setup
+
 1️⃣ Deploy the Token
 forge create src/Token.sol:KrkUSD \
   --rpc-url https://ethereum-hoodi-rpc.publicnode.com \
