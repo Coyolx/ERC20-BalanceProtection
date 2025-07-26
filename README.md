@@ -10,7 +10,7 @@ This solution is designed to protect DAO treasuries, high-value accounts, or wal
 ## 🎯 Objectives 
 
 - **Monitor** the balance of a specific ERC20 token (`KrkUSD`) on a target wallet.  
-- **Trigger** when the balance decreases by **30% or more**.
+- **Trigger** when the balance decreases by **30% or more**. 
 - **Automatically transfer** the remaining tokens to a backup wallet.  
 
 ---
