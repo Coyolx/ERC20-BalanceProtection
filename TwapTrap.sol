@@ -12,7 +12,7 @@ contract TwapTrap {
     uint256 public constant thresholdPercent = 30;
 
     constructor() { }
-
+  
     function collect() external view returns (bytes memory) {
         uint256 balance = IERC20(token).balanceOf(targetWallet);
         return abi.encode(balance);
