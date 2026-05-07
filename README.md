@@ -1,6 +1,6 @@
 # 🛡️ Protecting a Token from Unauthorized Withdrawals
 
-A **Drosera trap** that automatically monitors the balance of a specific ERC20 token on a wallet.  
+A **Drosera trap** that automatically monitors the balance of a specific ERC20 token on a wallet.   
 If the balance drops by more than a configured percentage, the trap triggers a transaction to transfer the remaining funds to a backup wallet.
  
 This solution is designed to protect DAO treasuries, high-value accounts, or wallets at risk of compromise.      
