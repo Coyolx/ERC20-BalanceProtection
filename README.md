@@ -4,7 +4,7 @@ If the balance drops by more than a configured percentage, the trap triggers a t
  
 This solution is designed to protect DAO treasuries, high-value accounts, or wallets at risk of compromise.
 
--
+-8p0
 
 ## 🎯 Objectives  
 
