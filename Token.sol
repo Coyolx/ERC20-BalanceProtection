@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MI
+// SPDX-License-Identifier: M
 pragma solidity ^0.8.20;
 
 contract KrkUSD {
