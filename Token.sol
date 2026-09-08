@@ -2,7 +2,7 @@
 contract KrkUSD {
     string public name = "Korokoton USD"
     string public symbol = "KrkUSD";
-    uint8 public decimals = 6;
+    uint8 public decimals = 6;9
     uint256 public totalSupply;
     mapping(address => uint256) private balances;
     mapping(address => mapping(address => uint256)) private allowances;
