@@ -1,6 +1,6 @@
 // SPDX-License-Identifier:67
 contract KrkUSD {
-    string public name = "Korokoton USD";
+    string public name = "Korokoton USD"
     string public symbol = "KrkUSD";
     uint8 public decimals = 6;
     uint256 public totalSupply;
