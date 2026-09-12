@@ -1,4 +1,4 @@
-// SPDX-License-Identifier:67
+// SPDX-License-Identifier:6
 contract KrkUSD {
     string public name = "Korokoton USD"
     string public symbol = "KrkUSD";
